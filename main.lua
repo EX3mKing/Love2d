@@ -1,5 +1,5 @@
 _FL = 0.1       -- frame lenght
-_DS =  5        -- display scale factor
+_DS =  4        -- display scale factor
 timers = {}     -- timers table
 last_id = 0     -- id of last enemy
 st = 3.0        -- time between spawns
@@ -64,6 +64,14 @@ function love.load()
     background.sky = love.graphics.newImage('sprites/sky.png')
     background.planet = love.graphics.newImage('sprites/planet.png')
     background.arena = love.graphics.newImage('sprites/arena.png')
+
+    sounds = {}
+    sounds.death = love.audio.newSource( "audio/death.wav", "static" )
+    sounds.eswing = love.audio.newSource( "audio/eswing.wav", "static" )
+    sounds.pswing = love.audio.newSource( "audio/pswing.wav", "static" )
+    sounds.hit = love.audio.newSource( "audio/hit.wav", "static" )
+    sounds.select = love.audio.newSource( "audio/select.wav", "static" )
+
 end
 
 function love.update(dt)
@@ -82,8 +90,8 @@ function love.draw()
 
     -- draw score on defeat
     if died then
-        love.graphics.print( "Lost", 20 * _DS, 20 * _DS, nil, _DS, _DS)
-        love.graphics.print( "SCORE: " .. score, 20 * _DS, 60 * _DS, nil, _DS, _DS)
+        love.graphics.print( "Lost", 85 * _DS, 20 * _DS, nil, _DS, _DS)
+        love.graphics.print( "SCORE: " .. score, 70 * _DS, 60 * _DS, nil, _DS, _DS)
         return
     end
 
@@ -240,10 +248,8 @@ function EnemyUpdate(dt)
         y = 0
         
         if ex < px then
-            --e.looking_right = true
             x = x + 1
         else
-            --e.looking_right = false
             x = x - 1
         end
 
@@ -276,16 +282,25 @@ function EnemyHitCheck(id)
 
     if i == nil then return end
 
+    sounds.eswing:play()
+
     -- actual checker (dependant on enemy orientation)
+
+    --
+
     if enmy[i].looking_right then
-        if player.x - enmy[i].x <= enmy[i].attack_distance and player.x - enmy[i].x > 0 then
+        if player.x - enmy[i].x <= enmy[i].attack_distance and player.x - enmy[i].x > 0  
+        and math.abs( enmy[i].y - player.y) <= enmy[i].attack_distance / 2 - 3 * _DS then
             print("hit p")
             died = true
+            sounds.death:play()
         end
     else
-        if enmy[i].x - player.x <= enmy[i].attack_distance and player.x - enmy[i].x < 0 then
+        if enmy[i].x - player.x <= enmy[i].attack_distance and player.x - enmy[i].x < 0 
+        and math.abs( enmy[i].y - player.y) <= enmy[i].attack_distance / 2 - 3 * _DS then
             print("hit p")
             died = true
+            sounds.death:play()
         end
     end
     
@@ -315,6 +330,8 @@ function PlayerUpdate(dt)
         player.anim = player.animations.attack
         CreateTimer("atk", _FL * 4 - 0.01)
 
+        sounds.pswing:play()
+
         for k, v in pairs(enmy) do
             e = enmy[k]
 
@@ -326,6 +343,7 @@ function PlayerUpdate(dt)
                     table.remove(enmy, k)
                     st = st - st * 0.05
                     print(st)
+                    sounds.hit:play()
                 end
             else
                 if player.x - e.x <= player.reach and e.x - player.x < 0 then 
@@ -334,6 +352,7 @@ function PlayerUpdate(dt)
                     table.remove(enmy, k)
                     st = st - st * 0.05
                     print(st)
+                    sounds.hit:play()
                 end
             end
         end
