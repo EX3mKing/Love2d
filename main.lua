@@ -1,5 +1,5 @@
 _FL = 0.1       -- frame lenght
-_DS =  4        -- display scale factor
+_DS =  4        -- display scale factor -- let it stay on 4
 timers = {}     -- timers table
 last_id = 0     -- id of last enemy
 st = 3.0        -- time between spawns
@@ -10,8 +10,8 @@ died = false
 
 function love.load()
     -- window setup
-    love.window.setMode(200 * _DS, 150 * _DS)
-    love.window.setTitle( "Damm I LÖVE vampires" )
+    -- love.window.setMode(200 * _DS, 150 * _DS)
+    -- love.window.setTitle( "Damm I LÖVE games" )
     love.graphics.setDefaultFilter("nearest", "nearest")
     
     -- get libraries
