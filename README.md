@@ -2,7 +2,7 @@
 #### Video Demo: https://youtu.be/RPlJs-yJZSA
 #### Description
 
-It iIt is a 2d survival high-score chaser made in Lua with the LÖVE framework and the anim8 library.
+It is a 2d survival high-score chaser made in Lua with the LÖVE framework and the anim8 library.
 You play as a white-haired samurai fighting a never-ending hoard of enemies. The only tool at your disposal
 is your trusty sword. Weave through the hoard and survive for as long as you can. The enemy spawn rate amps up the more enemies you kill.
 
@@ -32,5 +32,4 @@ I needed to shorten the project so that I could finish it before the end of the 
 it. Shortened up idea, while bare-bones, allowed me to finish in time.
 
 Having some experience with game development it wasn't hard finding the tools for the job. For the text editing I used VS Code, animating with
-Aseprite wasn't hard and sfxr made quick work of audio. I usually don't draw, let alone make audio. In spite of that, I'm satisfied with the end
-result.
+Aseprite wasn't hard and sfxr made quick work of audio. I usually don't draw, let alone make audio. In spite of that, I'm satisfied with the end result.
