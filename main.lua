@@ -230,6 +230,7 @@ function EnemyUpdate(dt)
             goto continue 
         end
 
+        -- cache info
         ex = e.x
         ey = e.y
         px = player.x
@@ -237,6 +238,7 @@ function EnemyUpdate(dt)
 
         e.looking_right = ex < px
 
+        -- wait to get in attack range
         if math.abs(ex - px) <= e.attack_distance - 3 * _DS and math.abs( ey - py) 
         <= e.attack_distance / 2 - 3 * _DS then
             e.anim = e.animations.attack
@@ -244,6 +246,7 @@ function EnemyUpdate(dt)
             goto continue
         end
 
+        -- movement
         x = 0
         y = 0
         
@@ -285,8 +288,6 @@ function EnemyHitCheck(id)
     sounds.eswing:play()
 
     -- actual checker (dependant on enemy orientation)
-
-    --
 
     if enmy[i].looking_right then
         if player.x - enmy[i].x <= enmy[i].attack_distance and player.x - enmy[i].x > 0  
@@ -368,6 +369,7 @@ function PlayerUpdate(dt)
     if player.x > arena.x1 then player.x = arena.x1 end
     if player.x < arena.x0 then player.x = arena.x0 end
 
+    -- player looking orientation
     if x > 0 then
         player.looking_right = true
     elseif x < 0 then

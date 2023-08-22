@@ -1,3 +1,4 @@
+-- inital state of the Love2d window
 function love.conf(t)
     t.window.width = 800
     t.window.height = 600
